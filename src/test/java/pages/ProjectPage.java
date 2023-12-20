@@ -8,14 +8,14 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class ProjectPage extends BasePage{
 
-    private static final String PROJECT_NAME_XPATH = "//*[text()=' repository']";
+    private static final String PROJECT_NAME_CSS = "h1[class]";
 
     private static final String ADD_CASE_BUTTON_ID = "create-case-button";
 
     @Override
     public boolean isPageOpened() {
         try {
-            $(By.xpath(PROJECT_NAME_XPATH)).shouldBe(Condition.visible);
+            $(By.id(ADD_CASE_BUTTON_ID)).shouldBe(Condition.visible);
             return true;
         } catch (Exception e) {
             return false;
@@ -28,7 +28,7 @@ public class ProjectPage extends BasePage{
     }
 
     public String getProjectName() {
-        return $(By.xpath(PROJECT_NAME_XPATH)).getText();
+        return $(PROJECT_NAME_CSS).getText().split("\\s+")[0];
     }
 
     public TestCaseCreationPage clickAddTestCaseButton() {

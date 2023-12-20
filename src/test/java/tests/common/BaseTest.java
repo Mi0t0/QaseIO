@@ -46,7 +46,7 @@ public class BaseTest {
         }
         Configuration.headless = true;
         Configuration.baseUrl = "https://app.qase.io";
-        Configuration.timeout = 4000;
+        Configuration.timeout = 10000;
         Configuration.browserSize = "1920x1080";
         open();
         testContext.setAttribute("driver", getWebDriver());

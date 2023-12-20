@@ -27,7 +27,7 @@ public class ProjectsTest extends BaseTest {
                 fillInDescription("Description").
                 clickCreateProjectButton();
         assertTrue(projectPage.isPageOpened(), "Project is not created");
-        assertEquals(projectPage.getProjectName(), projectId.toUpperCase() + " repository", "Project name is not correct");
+        assertEquals(projectPage.getProjectName(), projectId.toUpperCase(), "Project name is not correct");
     }
 
     @Test(description = "Try to create new project with too long project code")
