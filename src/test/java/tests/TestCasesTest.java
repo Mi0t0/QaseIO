@@ -5,6 +5,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tests.common.BaseTest;
 
+import java.util.Random;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -18,7 +20,7 @@ public class TestCasesTest extends BaseTest {
                 clickLoginButton();
         assertTrue(projectsListPage.isPageOpened(), "Login page is not opened");
 
-        String projectId = faker.cat().name();
+        String projectId = String.valueOf(new Random().nextInt(1000000000));
         projectsListPage.clickCreateNewProjectButton().
                 fillInProjectName(projectId).
                 fillInProjectCode(projectId).
