@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -37,30 +38,36 @@ public class ProjectsListPage extends BasePage{
         }
     }
 
+    @Step("Click create new project button")
     public ProjectsListPage clickCreateNewProjectButton() {
         $(By.id(CREATE_NEW_PROJECT_BUTTON_ID)).click();
         return this;
     }
 
+    @Step("Fill in project name")
     public ProjectsListPage fillInProjectName(String projectName) {
         $(By.id(PROJECT_NAME_INPUT_ID)).setValue(projectName);
         return this;
     }
 
+    @Step("Fill in project code")
     public ProjectsListPage fillInProjectCode(String projectCode) {
         $(By.xpath(PROJECT_CODE_INPUT_XPATH)).setValue(projectCode);
         return this;
     }
 
+    @Step("Fill in description")
     public ProjectsListPage fillInDescription(String description) {
         $(By.id(DESCRIPTION_TEXT_AREA_ID)).setValue(description);
         return this;
     }
 
+    @Step("Click create project button")
     public void clickCreateProjectButton() {
         $(CREATE_PROJECT_BUTTON_CSS).click();
     }
 
+    @Step("Check if alert is displayed")
     public boolean isAlertDisplayed() {
         try {
             $(ALERT_CSS).shouldBe(Condition.visible);
@@ -70,6 +77,7 @@ public class ProjectsListPage extends BasePage{
         }
     }
 
+    @Step("Get project code error text")
     public String getProjectCodeErrorText() {
         return $(By.xpath(PROJECT_CODE_INPUT_XPATH + PROJECT_CODE_ERROR_XPATH)).getText();
     }

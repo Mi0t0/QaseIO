@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -21,6 +22,7 @@ public class ProjectRepositoryPage extends BasePage{
         }
     }
 
+    @Step("Get test cases count")
     public int getTestCasesCount() {
         return $$(TEST_CASES_LIST_CSS).size();
     }

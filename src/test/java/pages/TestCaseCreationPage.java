@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.Condition;
 import dtos.TestCase;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -36,6 +37,7 @@ public class TestCaseCreationPage extends BasePage{
         }
     }
 
+    @Step("Create test case")
     public void createTestCase(TestCase testCase) {
         if (testCase.getTitle() != null) {
             $(By.id(TITLE_INPUT_ID)).setValue(testCase.getTitle());
@@ -52,6 +54,7 @@ public class TestCaseCreationPage extends BasePage{
         clickSaveTestCaseButton();
     }
 
+    @Step("Click add attachment button")
     public void clickSaveTestCaseButton() {
         $(By.id(SAVE_TEST_CASE_BUTTON_ID)).click();
     }
