@@ -30,4 +30,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Run smoke tests
-      run: mvn clean test
+      run: mvn clean test -Duser=$USER -Dpassword=$PASSWORD
+      env:
+        USER: ${{ secrets.QASE_USER }}
+        PASSWORD: ${{ secrets.QASE_PASSWORD }}
