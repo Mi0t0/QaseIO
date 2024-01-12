@@ -3,19 +3,16 @@ package pages;
 import com.codeborne.selenide.Condition;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import wrappers.Input;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class ProjectsListPage extends BasePage{
+public class ProjectsListPage extends BasePage {
 
     private static final String CREATE_NEW_PROJECT_BUTTON_ID = "createButton";
 
-    private static final String PROJECT_NAME_INPUT_ID = "project-name";
-
-    private static final String PROJECT_CODE_INPUT_XPATH = "//*[@id='project-code']";
-
-    private static final String PROJECT_CODE_ERROR_XPATH = "/../following-sibling::*";
+    private static final String PROJECT_CODE_ERROR_XPATH = "//*[@id='project-code']/../following-sibling::*";
 
     private static final String DESCRIPTION_TEXT_AREA_ID = "description-area";
 
@@ -33,7 +30,7 @@ public class ProjectsListPage extends BasePage{
         try {
             $(By.id(CREATE_NEW_PROJECT_BUTTON_ID)).shouldBe(Condition.visible);
             return true;
-        } catch (Exception e) {
+        } catch (Throwable e) {
             return false;
         }
     }
@@ -44,15 +41,17 @@ public class ProjectsListPage extends BasePage{
         return this;
     }
 
-    @Step("Fill in project name")
+    @Step("Fill in project name {projectName}")
     public ProjectsListPage fillInProjectName(String projectName) {
-        $(By.id(PROJECT_NAME_INPUT_ID)).setValue(projectName);
+        input = new Input();
+        input.fillInInput("Project name", projectName);
         return this;
     }
 
-    @Step("Fill in project code")
+    @Step("Fill in project code {projectCode}")
     public ProjectsListPage fillInProjectCode(String projectCode) {
-        $(By.xpath(PROJECT_CODE_INPUT_XPATH)).setValue(projectCode);
+        input = new Input();
+        input.fillInInput("Project code", projectCode);
         return this;
     }
 
@@ -79,6 +78,6 @@ public class ProjectsListPage extends BasePage{
 
     @Step("Get project code error text")
     public String getProjectCodeErrorText() {
-        return $(By.xpath(PROJECT_CODE_INPUT_XPATH + PROJECT_CODE_ERROR_XPATH)).getText();
+        return $(By.xpath(PROJECT_CODE_ERROR_XPATH)).getText();
     }
 }

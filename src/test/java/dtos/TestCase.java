@@ -25,7 +25,3 @@ public class TestCase {
     String attachments;
     String[][] steps;
 }
-
-
-
-

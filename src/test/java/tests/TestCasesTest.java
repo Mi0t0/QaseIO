@@ -37,9 +37,17 @@ public class TestCasesTest extends BaseTest {
                 createTestCase(
                         TestCase.builder().
                                 title("Test Case").
+                                status("Draft").
                                 description("Description").
-                                preconditions("Preconditions").
-                                postconditions("Postconditions").
+                                severity("Blocker").
+                                priority("High").
+                                type("Functional").
+                                layer("API").
+                                isFlaky(true).
+                                behavior("Positive").
+                                automationStatus("To be automated").
+                                preconditions("Preconditions example").
+                                postconditions("Postconditions example").
                                 build());
         assertTrue(projectRepositoryPage.isPageOpened(), "Project Repository page is not opened");
         assertEquals(projectRepositoryPage.getTestCasesCount(), 1, "Test Case is not created or more than 1 test cases were created");

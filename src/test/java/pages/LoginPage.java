@@ -6,7 +6,7 @@ import io.qameta.allure.Step;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class LoginPage extends BasePage{
+public class LoginPage extends BasePage {
 
     private static final String USERNAME_INPUT_CSS = "[name=email]";
 
@@ -19,7 +19,7 @@ public class LoginPage extends BasePage{
         try {
             $(LOGIN_BUTTON_CSS).shouldBe(Condition.visible);
             return true;
-        } catch (Exception e) {
+        } catch (Throwable e) {
             return false;
         }
     }

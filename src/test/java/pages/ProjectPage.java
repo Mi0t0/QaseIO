@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class ProjectPage extends BasePage{
+public class ProjectPage extends BasePage {
 
     private static final String PROJECT_NAME_CSS = "h1[class]";
 
@@ -18,7 +18,7 @@ public class ProjectPage extends BasePage{
         try {
             $(By.id(ADD_CASE_BUTTON_ID)).shouldBe(Condition.visible);
             return true;
-        } catch (Exception e) {
+        } catch (Throwable e) {
             return false;
         }
     }

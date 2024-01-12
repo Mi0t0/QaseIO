@@ -45,7 +45,7 @@ public class BaseTest {
             throw new IllegalArgumentException("Unknown browser: " + browser);
         }
         Configuration.headless = true;
-        Configuration.baseUrl = getProperty("qase_base_url");
+        Configuration.baseUrl = getProperty("qase.base.url");
         Configuration.timeout = 10000;
         Configuration.browserSize = "1920x1080";
         open();
@@ -58,8 +58,8 @@ public class BaseTest {
         testCaseCreationPage = new TestCaseCreationPage();
         projectRepositoryPage = new ProjectRepositoryPage();
 
-        USERNAME = System.getProperty("user", getProperty("qase_user"));
-        PASSWORD = System.getProperty("password", getProperty("qase_password"));
+        USERNAME = System.getProperty("user", getProperty("qase.user"));
+        PASSWORD = System.getProperty("password", getProperty("qase.password"));
     }
 
     @AfterMethod(alwaysRun = true, description = "Browser teardown")
