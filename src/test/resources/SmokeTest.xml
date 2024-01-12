@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="3" name="QaseIO smoke test" parallel="tests">
+    <test name="Thread #1">
+        <classes>
+            <class name="tests.LoginTest"/>
+        </classes>
+    </test>
+    <test name="Thread #2">
+        <classes>
+            <class name="tests.ProjectsTest"/>
+        </classes>
+    </test>
+    <test name="Thread #3">
+        <classes>
+            <class name="tests.TestCasesTest"/>
+        </classes>
+    </test>
+</suite>
