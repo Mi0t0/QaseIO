@@ -25,4 +25,14 @@ public class Input {
             $(By.xpath(String.format(TEXT_AREA_XPATH, label))).setValue(text);
         }
     }
+
+    public void cleanInput(String label) {
+        log.info("Cleaning an input with label '{}'", label);
+        $(By.xpath(String.format(INPUT_XPATH, label))).clear();
+    }
+
+    public void cleanTextArea(String label) {
+        log.info("Cleaning a text area with label '{}'", label);
+        $(By.xpath(String.format(TEXT_AREA_XPATH, label))).clear();
+    }
 }

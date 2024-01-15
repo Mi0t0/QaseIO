@@ -7,8 +7,12 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
-import pages.*;
+import steps.ApiSteps;
+import steps.LoginSteps;
+import steps.ProjectSteps;
+import steps.TestCaseSteps;
 
+import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -22,15 +26,13 @@ public class BaseTest {
 
     protected Faker faker;
 
-    protected LoginPage loginPage;
+    protected ApiSteps apiSteps;
 
-    protected ProjectsListPage projectsListPage;
+    protected LoginSteps loginSteps;
 
-    protected ProjectPage projectPage;
+    protected ProjectSteps projectSteps;
 
-    protected TestCaseCreationPage testCaseCreationPage;
-
-    protected ProjectRepositoryPage projectRepositoryPage;
+    protected TestCaseSteps testCaseSteps;
 
     @Parameters({"browser"})
     @BeforeMethod(description = "Browser setup")
@@ -45,18 +47,17 @@ public class BaseTest {
             throw new IllegalArgumentException("Unknown browser: " + browser);
         }
         Configuration.headless = true;
-        Configuration.baseUrl = getProperty("qase.base.url");
+        baseUrl = getProperty("qase.base.url");
         Configuration.timeout = 10000;
         Configuration.browserSize = "1920x1080";
-        open();
+        open(baseUrl);
         testContext.setAttribute("driver", getWebDriver());
 
         faker = new Faker();
-        loginPage = new LoginPage();
-        projectsListPage = new ProjectsListPage();
-        projectPage = new ProjectPage();
-        testCaseCreationPage = new TestCaseCreationPage();
-        projectRepositoryPage = new ProjectRepositoryPage();
+        apiSteps = new ApiSteps();
+        loginSteps = new LoginSteps();
+        projectSteps = new ProjectSteps();
+        testCaseSteps = new TestCaseSteps();
 
         USERNAME = System.getProperty("user", getProperty("qase.user"));
         PASSWORD = System.getProperty("password", getProperty("qase.password"));
