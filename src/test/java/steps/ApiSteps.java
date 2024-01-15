@@ -18,6 +18,7 @@ public class ApiSteps {
     private ApiRequests apiRequests = new ApiRequests();
 
     public ApiSteps login(String username, String password) {
+        log.info("Logging in through API with username '{}' and password '{}'", username, password);
         Map<String, String> cookies = apiRequests.getLoginCookies(username, password);
         getWebDriver().manage().addCookie(new Cookie("XSRF-TOKEN", cookies.get("XSRF-TOKEN")));
         getWebDriver().manage().addCookie(new Cookie("__Host-session", cookies.get("__Host-session")));

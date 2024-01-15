@@ -45,8 +45,8 @@ public class ProjectSteps {
     @Step("Check if project with correct code is created")
     public ProjectSteps checkThatProjectIsCreated(Project project) {
         log.info("Checking that project is created");
-        assertTrue(apiRequests.doesProjectExist(project.getProjectCode()));
         assertTrue(projectPage.isPageOpened(), "Project is not created");
+        assertTrue(apiRequests.doesProjectExist(project.getProjectCode().toUpperCase()));
         return this;
     }
 
