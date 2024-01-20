@@ -2,10 +2,8 @@ package pages;
 
 import com.codeborne.selenide.Condition;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 
 public class ProjectRepositoryPage extends BasePage {
 
@@ -32,6 +30,6 @@ public class ProjectRepositoryPage extends BasePage {
 
     @Step("Check if test case belongs to suite")
     public boolean doesTestCaseBelongToSuite(String suiteTitle, String testCaseTitle) {
-        return $(By.xpath(String.format(TEST_CASE_XPATH, suiteTitle, testCaseTitle))).exists();
+        return $x(String.format(TEST_CASE_XPATH, suiteTitle, testCaseTitle)).exists();
     }
 }

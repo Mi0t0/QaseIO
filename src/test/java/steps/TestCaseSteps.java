@@ -10,11 +10,11 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 @Log4j2
-public class TestCaseSteps {
+public class TestCaseSteps extends BaseStep {
 
-    TestCaseCreationPage testCaseCreationPage = new TestCaseCreationPage();
+    private final TestCaseCreationPage testCaseCreationPage = new TestCaseCreationPage();
 
-    ProjectRepositoryPage projectRepositoryPage = new ProjectRepositoryPage();
+    private final ProjectRepositoryPage projectRepositoryPage = new ProjectRepositoryPage();
 
     @Step("Open test case creation page")
     public TestCaseSteps openCreatePage(String projectCode) {
@@ -60,10 +60,10 @@ public class TestCaseSteps {
     }
 
     @Step("Check that test case belongs to suite")
-    public TestCaseSteps checkThatTestCaseBelongsToSuite(String suiteName) {
+    public TestCaseSteps checkThatTestCaseBelongsToSuite(String suiteName, String testCaseName) {
         log.info("Checking that test case belongs to suite");
         assertTrue(projectRepositoryPage.isPageOpened(), "Project Repository page is not opened");
-        assertTrue(projectRepositoryPage.doesTestCaseBelongToSuite(suiteName, "Test Case 3"), "Test Case is not created or or belongs to another suite");
+        assertTrue(projectRepositoryPage.doesTestCaseBelongToSuite(suiteName, testCaseName), "Test Case is not created or or belongs to another suite");
         return this;
     }
 }

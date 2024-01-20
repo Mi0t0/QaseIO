@@ -2,7 +2,6 @@ package tests;
 
 import dtos.TestCase;
 import dtos.TestSuite;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -10,7 +9,7 @@ import tests.common.BaseTest;
 
 public class TestCasesTest extends BaseTest {
 
-    private static final String PROJECT_CODE = "Test".toUpperCase();
+    private static final String PROJECT_CODE = "Test1337".toUpperCase();
 
     private static final String SUITE_NAME = "TestSuite";
 
@@ -24,12 +23,6 @@ public class TestCasesTest extends BaseTest {
 
         testCaseSteps.
                 openCreatePage(PROJECT_CODE);
-    }
-
-    @AfterMethod(description = "Delete project")
-    public void deleteProject() {
-        apiSteps.
-                deleteProjectByCodeIfExists(PROJECT_CODE);
     }
 
     @DataProvider
@@ -46,7 +39,7 @@ public class TestCasesTest extends BaseTest {
                     layer("API").
                     isFlaky(true).
                     behavior("Positive").
-                    automationStatus("To be automated").
+                    automationStatus("Manual").
                     preconditions("Pre-conditions example").
                     postconditions("Post-conditions example").
                     build()
@@ -72,7 +65,7 @@ public class TestCasesTest extends BaseTest {
                     type("Smoke").
                     layer("Unit").
                     behavior("Destructive").
-                    automationStatus("Not automated").
+                    automationStatus("Manual").
                     build()
                 }
         };
@@ -94,9 +87,10 @@ public class TestCasesTest extends BaseTest {
 
     @Test(description = "Test Case should belong to it's test suite")
     public void testCaseShouldBelongToItsSuite() {
+        String testCaseName = "Some Test Case";
         testCaseSteps.
                 createTestCase(TestCase.builder().
-                    title("Test Case 3").
+                    title(testCaseName).
                     status("Deprecated").
                     suite(SUITE_NAME).
                     severity("Trivial").
@@ -104,8 +98,8 @@ public class TestCasesTest extends BaseTest {
                     type("Smoke").
                     layer("Unit").
                     behavior("Destructive").
-                    automationStatus("Not automated").
+                    automationStatus("Manual").
                     build()).
-                checkThatTestCaseBelongsToSuite(SUITE_NAME);
+                checkThatTestCaseBelongsToSuite(SUITE_NAME, testCaseName);
     }
 }

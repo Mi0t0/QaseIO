@@ -3,10 +3,7 @@ package tests.common;
 import com.codeborne.selenide.Configuration;
 import com.github.javafaker.Faker;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 import steps.ApiSteps;
 import steps.LoginSteps;
 import steps.ProjectSteps;
@@ -18,6 +15,7 @@ import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static utils.PropertyReader.getProperty;
 
+@Listeners(TestListener.class)
 public class BaseTest {
 
     public static String USERNAME;
@@ -33,6 +31,11 @@ public class BaseTest {
     protected ProjectSteps projectSteps;
 
     protected TestCaseSteps testCaseSteps;
+
+    @BeforeSuite(description = "Suite setup")
+    public void environmentSetup() {
+        new ApiSteps().cleanProjectsList();
+    }
 
     @Parameters({"browser"})
     @BeforeMethod(description = "Browser setup")

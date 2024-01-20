@@ -1,11 +1,16 @@
 package adapters;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import dtos.Project;
 import dtos.TestSuite;
 import io.restassured.RestAssured;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static io.restassured.RestAssured.given;
 import static utils.PropertyReader.getProperty;
@@ -24,6 +29,28 @@ public class ApiRequests {
                 post(getProperty("qase.base.url") + "/v1/auth/login/regular").
         then().
                 statusCode(204).extract().cookies();
+    }
+
+    public Set<Project> getProjectsSet() {
+        RestAssured.baseURI = BASE_URL;
+        Set<Project> projectsSet = new HashSet<>();
+        String projectsString = given().
+                header("Token", TOKEN).
+                param("limit", 100).
+        when().
+                get("/project").
+        then().
+                statusCode(200).extract().body().asString();
+        Gson gson = new Gson();
+
+        JsonArray entitiesArray = gson.fromJson(projectsString, JsonObject.class). // entitiesArray is a Project array
+                getAsJsonObject("result").
+                getAsJsonArray("entities");
+        for (JsonElement entityElement : entitiesArray) {
+            projectsSet.
+                    add(gson.fromJson(entityElement.getAsJsonObject(), Project.class)); // entityElement is a Project
+        }
+        return projectsSet;
     }
 
     public void createProject(Project project) {
