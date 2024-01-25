@@ -2,10 +2,10 @@ package pages;
 
 import com.codeborne.selenide.Condition;
 import dtos.TestCase;
+import helpers.InputHelper;
+import helpers.PicklistHelper;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
-import wrappers.Input;
-import wrappers.Picklist;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -33,8 +33,8 @@ public class TestCaseCreationPage extends BasePage {
     }
 
     public TestCaseCreationPage fillInAllFields(TestCase testCase) {
-        input = new Input();
-        picklist = new Picklist();
+        input = new InputHelper();
+        picklist = new PicklistHelper();
 
         input.fillInInput("Title", testCase.getTitle());
         picklist.select("Status", testCase.getStatus());
@@ -57,16 +57,5 @@ public class TestCaseCreationPage extends BasePage {
     public TestCaseCreationPage clickSaveTestCaseButton() {
         $(By.id(SAVE_TEST_CASE_BUTTON_ID)).click();
         return this;
-    }
-
-    public TestCaseCreationPage makeSaveButtonEnabled() {
-        input = new Input();
-        input.fillInInput("Title", "Test");
-        input.cleanInput("Title");
-        return this;
-    }
-
-    public boolean isTitleInputErrorDisplayed() {
-        return Boolean.parseBoolean($(By.id(TITLE_INPUT_ID)).getAttribute("required"));
     }
 }

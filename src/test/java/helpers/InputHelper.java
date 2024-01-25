@@ -1,11 +1,11 @@
-package wrappers;
+package helpers;
 
 import lombok.extern.log4j.Log4j2;
 
 import static com.codeborne.selenide.Selenide.$x;
 
 @Log4j2
-public class Input {
+public class InputHelper {
 
     private static final String TEXT_AREA_XPATH = "//*[contains(text(),'%s') and @for]//following::p";
 

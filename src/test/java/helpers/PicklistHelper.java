@@ -1,11 +1,11 @@
-package wrappers;
+package helpers;
 
 import lombok.extern.log4j.Log4j2;
 
 import static com.codeborne.selenide.Selenide.$x;
 
 @Log4j2
-public class Picklist {
+public class PicklistHelper {
 
     private static final String PICKLIST_XPATH = "//label[text()='%s']//following::input";
 

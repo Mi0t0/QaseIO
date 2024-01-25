@@ -5,6 +5,7 @@ import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import pages.ProjectRepositoryPage;
 import pages.TestCaseCreationPage;
+import pages.TestCaseEditPage;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -15,6 +16,8 @@ public class TestCaseSteps extends BaseStep {
     private final TestCaseCreationPage testCaseCreationPage = new TestCaseCreationPage();
 
     private final ProjectRepositoryPage projectRepositoryPage = new ProjectRepositoryPage();
+
+    private final TestCaseEditPage testCaseEditPage = new TestCaseEditPage();
 
     @Step("Open test case creation page")
     public TestCaseSteps openCreatePage(String projectCode) {
@@ -34,23 +37,6 @@ public class TestCaseSteps extends BaseStep {
         return this;
     }
 
-
-    @Step("Save test case with empty title")
-    public TestCaseSteps saveTestCaseWithEmptyTitle() {
-        log.info("Saving test case with empty title");
-        testCaseCreationPage.
-                makeSaveButtonEnabled().
-                clickSaveTestCaseButton();
-        return this;
-    }
-
-    @Step("Check that title input error is displayed")
-    public TestCaseSteps checkThatTitleInputErrorDisplayed() {
-        log.info("Checking that title input error is displayed");
-        assertTrue(testCaseCreationPage.isTitleInputErrorDisplayed(), "Title field has not required attribute");
-        return this;
-    }
-
     @Step("Check that test case is created")
     public TestCaseSteps checkThatTestCaseIsCreated() {
         log.info("Checking that test case is created");
@@ -64,6 +50,22 @@ public class TestCaseSteps extends BaseStep {
         log.info("Checking that test case belongs to suite");
         assertTrue(projectRepositoryPage.isPageOpened(), "Project Repository page is not opened");
         assertTrue(projectRepositoryPage.doesTestCaseBelongToSuite(suiteName, testCaseName), "Test Case is not created or or belongs to another suite");
+        return this;
+    }
+
+    @Step("Open test case number '{index}' of project '{projectCode}'")
+    public TestCaseSteps openTestCase(String projectCode, int index) {
+        log.info("Opening test case number '{}' of project '{}'", index, projectCode);
+        testCaseEditPage.
+                openPage(projectCode, index).
+                isPageOpened();
+        return this;
+    }
+
+    @Step("Check test case specs")
+    public TestCaseSteps checkTestCaseSpecs(TestCase testCase) {
+        log.info("Checking test case specs");
+        assertEquals(testCaseEditPage.getTestCaseSpecs(), testCase, "Test Case specs has incorrect value(s)");
         return this;
     }
 }

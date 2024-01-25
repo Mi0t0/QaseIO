@@ -21,7 +21,7 @@ public class ProjectsTest extends BaseTest {
 
     @Test(description = "Create new project")
     public void projectShouldBeCreated() {
-        String projectId = projectSteps.getRandonProjectId();
+        String projectId = projectSteps.getRandomProjectId();
         Project project = Project.builder().
                 projectName(projectId).
                 projectCode(projectId).
@@ -30,14 +30,15 @@ public class ProjectsTest extends BaseTest {
 
         projectSteps.
                 createProject(project).
-                checkThatProjectIsCreated(project);
+                checkThatProjectIsCreated(project).
+                checkThatProjectNameIsCorrect(project);
         apiSteps.
                 deleteProjectByCodeIfExists(projectId);
     }
 
     @Test(description = "Created project displayed in projects list")
-    public void createdProjectShouldBeDisplayedInProjectsList() throws InterruptedException {
-        String projectId = projectSteps.getRandonProjectId();
+    public void createdProjectShouldBeDisplayedInProjectsList() {
+        String projectId = projectSteps.getRandomProjectId();
         Project project = Project.builder().
                 projectName(projectId).
                 projectCode(projectId).
@@ -54,7 +55,7 @@ public class ProjectsTest extends BaseTest {
 
     @Test(description = "Try to create new project with too long project code")
     public void projectCodeShouldBeLessThen10Characters() {
-        String projectCode = "12345678901";
+        String projectCode = "1234567890123";
         Project project = Project.builder().
                 projectName(projectCode).
                 projectCode(projectCode).
@@ -84,7 +85,7 @@ public class ProjectsTest extends BaseTest {
 
     @Test(description = "Try to create new project with too long project code")
     public void incorrectProjectCodeFormat() {
-        String projectCode = "абвгд";
+        String projectCode = "абвгд123";
         Project project = Project.builder().
                 projectName(projectCode).
                 projectCode(projectCode).
@@ -113,7 +114,7 @@ public class ProjectsTest extends BaseTest {
                 checkThatAlertIsDisplayed().
                 checkThatProjectCodeErrorTextIsCorrect(project);
         apiSteps.
-                deleteProjectByCodeIfExists(projectCode);
+                deleteProjectByCodeIfExists(projectCode.toUpperCase());
     }
 
     @Test(description = "Rows per page defines number of projects displayed on page")
@@ -132,37 +133,36 @@ public class ProjectsTest extends BaseTest {
     }
 
     @Test(description = "Page navigation should work correctly")
-    public void pageNavigationButtonsShouldChangeProjects() {
-        ArrayList<String> projectsNames = new ArrayList<>();
+    public void pageNavigationButtonsShouldChangeListOfProjects() {
         apiSteps.
                 createSeveralRandomProjects(6);
         projectSteps.
                 openPage().
                 defineRowsOfProjectsToDisplayPerPage(5);
 
-        projectsNames.addAll(projectSteps.getProjectsNamesOnPage());
+        ArrayList<String> projectsNames = new ArrayList<>(projectSteps.getProjectsNamesOnPage());
         projectSteps.
                 clickNextPageButton().
-                checkIfDifferentProjectsPageContainsDifferentProjects(projectsNames, true).
+                checkIfListOfProjectsIsDifferent(projectsNames, true).
                 clickPreviousPageButton().
-                checkIfDifferentProjectsPageContainsDifferentProjects(projectsNames, false).
+                checkIfListOfProjectsIsDifferent(projectsNames, false).
                 clickPageNumber(2).
-                checkIfDifferentProjectsPageContainsDifferentProjects(projectsNames, true);
+                checkIfListOfProjectsIsDifferent(projectsNames, true);
     }
 
     @Test(description = "Project should be removed if it was deleted")
     public void projectShouldBeRemovedIfItWasDeleted() {
-        String projectId = projectSteps.getRandonProjectId();
+        String projectId = projectSteps.getRandomProjectId();
         Project project = Project.builder().
                 projectName(projectId).
                 projectCode(projectId).
-                description("Description").
                 build();
 
         projectSteps.
                 createProject(project).
                 openPage().
-                deleteProject(project);
+                deleteProject(project).
+                confirmProjectDeletion(true);
         apiSteps.
                 checkIfProjectExists(project, false);
         projectSteps.
@@ -171,17 +171,17 @@ public class ProjectsTest extends BaseTest {
 
     @Test(description = "Project should not be deleted if deletion confirmation was canceled")
     public void projectShouldNotBeRemovedIfDeletionConfirmationWasCanceled() {
-        String projectId = projectSteps.getRandonProjectId();
+        String projectId = projectSteps.getRandomProjectId();
         Project project = Project.builder().
                 projectName(projectId).
                 projectCode(projectId).
-                description("Description").
                 build();
 
         projectSteps.
                 createProject(project).
                 openPage().
-                interruptProjectDeletion(project);
+                deleteProject(project).
+                confirmProjectDeletion(false);
         apiSteps.
                 checkIfProjectExists(project, true);
         projectSteps.

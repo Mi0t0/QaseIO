@@ -8,6 +8,7 @@ import pages.ProjectPage;
 import pages.ProjectsListPage;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import static org.testng.Assert.*;
 
@@ -51,6 +52,13 @@ public class ProjectSteps extends BaseStep {
         return this;
     }
 
+    @Step("Check that project name is correct")
+    public ProjectSteps checkThatProjectNameIsCorrect(Project project) {
+        log.info("Checking that project name is correct");
+        assertEquals(projectPage.getProjectName(), project.getProjectName(), "Project name is not correct");
+        return this;
+    }
+
     @Step("Check that alert is displayed")
     public ProjectSteps checkThatAlertIsDisplayed() {
         log.info("Checking that alert is displayed");
@@ -61,21 +69,22 @@ public class ProjectSteps extends BaseStep {
     @Step("Check that project code error text is correct")
     public ProjectSteps checkThatProjectCodeErrorTextIsCorrect(Project project) {
         log.info("Checking that project code error text is correct");
-        switch (project.getProjectCode()) {
-            case "12345678901":
-                assertEquals(projectsListPage.getProjectCodeErrorText(), "The code may not be greater than 10 characters.", INCORRECT_PROJECT_CODE_ERROR_TEXT);
-                break;
-            case "1":
-                assertEquals(projectsListPage.getProjectCodeErrorText(), "The code must be at least 2 characters.", INCORRECT_PROJECT_CODE_ERROR_TEXT);
-                break;
-            case "абвгд":
-                assertEquals(projectsListPage.getProjectCodeErrorText(), "The code format is invalid.", INCORRECT_PROJECT_CODE_ERROR_TEXT);
-                break;
-            case "sameCode":
-                assertEquals(projectsListPage.getProjectCodeErrorText(), "The selected project code is already in use.", INCORRECT_PROJECT_CODE_ERROR_TEXT);
-                break;
-            default:
-                log.warn("Unhandled project code");
+
+        Pattern elevenCharacters = Pattern.compile("^^.{11,}$");
+        Pattern oneCharacter = Pattern.compile("^.{1}$");
+        Pattern validCharacters = Pattern.compile("[a-zA-Z0-9]+");
+        Pattern sameCode = Pattern.compile("^sameCode$");
+
+        if (elevenCharacters.matcher(project.getProjectCode()).matches()) {
+            assertEquals(projectsListPage.getProjectCodeErrorText(), "The code may not be greater than 10 characters.", INCORRECT_PROJECT_CODE_ERROR_TEXT);
+        } else if (oneCharacter.matcher(project.getProjectCode()).matches()) {
+            assertEquals(projectsListPage.getProjectCodeErrorText(), "The code must be at least 2 characters.", INCORRECT_PROJECT_CODE_ERROR_TEXT);
+        } else if (!validCharacters.matcher(project.getProjectCode()).matches()) {
+            assertEquals(projectsListPage.getProjectCodeErrorText(), "The code format is invalid.", INCORRECT_PROJECT_CODE_ERROR_TEXT);
+        } else if (sameCode.matcher(project.getProjectCode()).matches()) {
+            assertEquals(projectsListPage.getProjectCodeErrorText(), "The selected project code is already in use.", INCORRECT_PROJECT_CODE_ERROR_TEXT);
+        } else {
+            throw new AssertionError("Unhandled project code");
         }
         return this;
     }
@@ -115,10 +124,10 @@ public class ProjectSteps extends BaseStep {
     }
 
     @Step("Check that new projects page contains different projects")
-    public ProjectSteps checkIfDifferentProjectsPageContainsDifferentProjects(ArrayList<String> projectsNamesOnPage, boolean areNamesDifferent) {
+    public ProjectSteps checkIfListOfProjectsIsDifferent(ArrayList<String> projectsNamesOnPage, boolean shouldNamesBeDifferent) {
         log.info("Checking that new projects page contains different projects");
         projectsListPage.waitForProjectsNamesLoadUp();
-        if (areNamesDifferent)
+        if (shouldNamesBeDifferent)
             assertNotEquals(projectsListPage.getProjectsNamesOnPage(), projectsNamesOnPage, "Projects on page are the same");
         else
             assertEquals(projectsListPage.getProjectsNamesOnPage(), projectsNamesOnPage, "Projects on page are different");
@@ -154,18 +163,18 @@ public class ProjectSteps extends BaseStep {
         log.info("Deleting project '{}' with code '{}'", project.getProjectName(), project.getProjectCode());
         projectsListPage.
                 clickProjectActionButton(project.getProjectName()).
-                clickRemoveProjectButton().
-                clickConfirmProjectDeletionButton();
+                clickRemoveProjectButton();
         return this;
     }
 
-    @Step("Cancel project deletion confirmation window")
-    public ProjectSteps interruptProjectDeletion(Project project) {
-        log.info("Canceling project deletion confirmation window");
-        projectsListPage.
-                clickProjectActionButton(project.getProjectName()).
-                clickRemoveProjectButton().
-                clickCancelProjectDeletionButton();
+    @Step("Confirm project deletion")
+    public ProjectSteps confirmProjectDeletion(boolean confirmDeletion) {
+        log.info("Confirming project deletion");
+        if (confirmDeletion) {
+            projectsListPage.clickConfirmProjectDeletionButton();
+        } else {
+            projectsListPage.clickCancelProjectDeletionButton();
+        }
         return this;
     }
 }

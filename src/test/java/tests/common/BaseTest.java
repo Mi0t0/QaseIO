@@ -50,9 +50,9 @@ public class BaseTest {
             throw new IllegalArgumentException("Unknown browser: " + browser);
         }
         Configuration.headless = true;
-        baseUrl = getProperty("qase.base.url");
         Configuration.timeout = 10000;
         Configuration.browserSize = "1920x1080";
+        baseUrl = getProperty("qase.base.url");
         open(baseUrl);
         testContext.setAttribute("driver", getWebDriver());
 

@@ -2,10 +2,10 @@ package pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideWait;
+import helpers.InputHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import wrappers.Input;
 
 import java.util.ArrayList;
 
@@ -65,13 +65,13 @@ public class ProjectsListPage extends BasePage {
     }
 
     public ProjectsListPage fillInProjectName(String projectName) {
-        input = new Input();
+        input = new InputHelper();
         input.fillInInput("Project name", projectName);
         return this;
     }
 
     public ProjectsListPage fillInProjectCode(String projectCode) {
-        input = new Input();
+        input = new InputHelper();
         input.fillInInput("Project code", projectCode);
         return this;
     }
@@ -109,7 +109,7 @@ public class ProjectsListPage extends BasePage {
     public ProjectsListPage waitForProjectsNamesLoadUp() {
         try {
             SelenideWait wait = new SelenideWait(getWebDriver(), 10000L, 100L);
-            wait.until((WebDriver driver) -> $$x(PROJECTS_NAMES_XPATH).size() > 0);
+            wait.until((WebDriver driver) -> !$$x(PROJECTS_NAMES_XPATH).isEmpty());
         } catch (Exception ignored) {
         }
         return this;

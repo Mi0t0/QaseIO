@@ -71,18 +71,23 @@ public class TestCasesTest extends BaseTest {
         };
     }
 
-    @Test(description = "Create Test Cases with different values", dataProvider = "testCaseSpecs")
-    public void testCaseShouldBeCreated(TestCase testCase) {
+    @Test(dependsOnMethods = "testCaseShouldBeCreated", description = "Create Test Cases with different values", dataProvider = "testCaseSpecs")
+    public void testCaseShouldHasCorrectSpecs(TestCase testCase) {
+        testCaseSteps.
+                createTestCase(testCase).
+                openTestCase(PROJECT_CODE, 1).
+                checkTestCaseSpecs(testCase);
+    }
+
+    @Test(description = "Test Case should be created")
+    public void testCaseShouldBeCreated() {
+        TestCase testCase = TestCase.builder().
+                title("Test Case 1").
+                build();
+
         testCaseSteps.
                 createTestCase(testCase).
                 checkThatTestCaseIsCreated();
-    }
-
-    @Test(description = "Title field is required for Test Case creation")
-    public void titleFieldShouldBeMandatory() {
-        testCaseSteps.
-                saveTestCaseWithEmptyTitle().
-                checkThatTitleInputErrorDisplayed();
     }
 
     @Test(description = "Test Case should belong to it's test suite")

@@ -42,7 +42,7 @@ public class ApiSteps extends BaseStep {
     @Step("Create project with code '{projectCode}'")
     public ApiSteps createProjectWithCode(String projectCode) {
         log.info("Creating new project with code '{}'", projectCode);
-        String projectId = getRandonProjectId();
+        String projectId = getRandomProjectId();
         Faker faker = new Faker();
 
         apiRequests.createProject(Project.builder().
@@ -78,7 +78,7 @@ public class ApiSteps extends BaseStep {
     public ApiSteps createSeveralRandomProjects(int quantityOfProjects) {
         Faker faker = new Faker();
         for (int i = 0; i < quantityOfProjects; i++) {
-            String projectCode = getRandonProjectId();
+            String projectCode = getRandomProjectId();
             apiRequests.createProject(Project.builder().
                     projectName(faker.name().firstName()).
                     projectCode(projectCode).
