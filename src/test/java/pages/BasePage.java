@@ -1,13 +1,13 @@
 package pages;
 
-import wrappers.Input;
-import wrappers.Picklist;
+import helpers.InputHelper;
+import helpers.PicklistHelper;
 
 public abstract class BasePage {
 
-    Input input;
+    InputHelper input;
 
-    Picklist picklist;
+    PicklistHelper picklist;
 
     public abstract boolean isPageOpened();
 }
