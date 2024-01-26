@@ -2,6 +2,8 @@ package pages;
 
 import com.codeborne.selenide.Condition;
 import dtos.TestCase;
+import helpers.InputHelper;
+import helpers.PicklistHelper;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -10,9 +12,6 @@ public class TestCaseEditPage extends BasePage {
 
     private static final String TITLE_INPUT_ID = "title";
 
-    private static final String TEXTAREA_XPATH = "(//*[text()='%s']/following-sibling::*//p)[last()]";
-
-    private static final String PICKLIST_TEXT_XPATH = "//*[text()='%s']/following-sibling::*//*[text()]";
 
     public TestCaseEditPage openPage(String projectCode, int testCaseIndex) {
         open(String.format("/case/%s/edit/%s", projectCode, testCaseIndex));
@@ -29,42 +28,23 @@ public class TestCaseEditPage extends BasePage {
         }
     }
 
-    public String getPickListText(String pickListName) {
-        return $x(String.format(PICKLIST_TEXT_XPATH, pickListName)).getText();
-    }
-
-    public String getTextAreaText(String textAreaName) {
-        if ($x(String.format(TEXTAREA_XPATH, textAreaName)).isDisplayed())
-            return $x(String.format(TEXTAREA_XPATH, textAreaName)).getText();
-        else
-            return "";
-    }
-
     public TestCase getTestCaseSpecs() {
-        String description = getTextAreaText("Description");
-        String preconditions = getTextAreaText("Pre-conditions");
-        String postconditions = getTextAreaText("Post-conditions");
-
-        if (description.isEmpty())
-            description = null;
-        if (preconditions.isEmpty())
-            preconditions = null;
-        if (postconditions.isEmpty())
-            postconditions = null;
+        InputHelper input = new InputHelper();
+        PicklistHelper picklist = new PicklistHelper();
 
         return TestCase.builder().
                 title($(By.id(TITLE_INPUT_ID)).getValue()).
-                status(getPickListText("Status")).
-                description(description).
-                severity(getPickListText("Severity")).
-                priority(getPickListText("Priority")).
-                type(getPickListText("Type")).
-                layer(getPickListText("Layer")).
-                isFlaky(getPickListText("Is flaky").equals("Yes")).
-                behavior(getPickListText("Behavior")).
-                automationStatus(getPickListText("Automation status")).
-                preconditions(preconditions).
-                postconditions(postconditions).
+                status(picklist.getPickListText("Status")).
+                description(input.getTextAreaText("Description")).
+                severity(picklist.getPickListText("Severity")).
+                priority(picklist.getPickListText("Priority")).
+                type(picklist.getPickListText("Type")).
+                layer(picklist.getPickListText("Layer")).
+                isFlaky(picklist.getPickListText("Is flaky").equals("Yes")).
+                behavior(picklist.getPickListText("Behavior")).
+                automationStatus(picklist.getPickListText("Automation status")).
+                preconditions(input.getTextAreaText("Pre-conditions")).
+                postconditions(input.getTextAreaText("Post-conditions")).
                 build();
     }
 }

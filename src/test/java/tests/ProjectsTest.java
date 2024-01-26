@@ -65,7 +65,7 @@ public class ProjectsTest extends BaseTest {
         projectSteps.
                 createProject(project).
                 checkThatAlertIsDisplayed().
-                checkThatProjectCodeErrorTextIsCorrect(project);
+                errorMessageShouldBe("The code may not be greater than 10 characters.");
     }
 
     @Test(description = "Try to create new project with too short project code")
@@ -80,7 +80,7 @@ public class ProjectsTest extends BaseTest {
         projectSteps.
                 createProject(project).
                 checkThatAlertIsDisplayed().
-                checkThatProjectCodeErrorTextIsCorrect(project);
+                errorMessageShouldBe("The code must be at least 2 characters.");
     }
 
     @Test(description = "Try to create new project with too long project code")
@@ -95,7 +95,7 @@ public class ProjectsTest extends BaseTest {
         projectSteps.
                 createProject(project).
                 checkThatAlertIsDisplayed().
-                checkThatProjectCodeErrorTextIsCorrect(project);
+                errorMessageShouldBe("The code format is invalid.");
     }
 
     @Test(description = "Try to create new project with existing project code in use")
@@ -112,7 +112,7 @@ public class ProjectsTest extends BaseTest {
                 openPage().
                 createProject(project).
                 checkThatAlertIsDisplayed().
-                checkThatProjectCodeErrorTextIsCorrect(project);
+                errorMessageShouldBe("The selected project code is already in use.");
         apiSteps.
                 deleteProjectByCodeIfExists(projectCode.toUpperCase());
     }

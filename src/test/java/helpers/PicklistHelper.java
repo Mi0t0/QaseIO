@@ -13,6 +13,8 @@ public class PicklistHelper {
 
     private static final String SUITE_PICKLIST_XPATH = "//*[contains(text(),'Suite') and @for]/..//*[text()='%s']";
 
+    private static final String PICKLIST_TEXT_XPATH = "//*[text()='%s']/following-sibling::*//*[text()]";
+
     public void select(String label, String option) {
         if (option != null) {
             log.info("Selecting option '{}' from picklist with label '{}'", option, label);
@@ -27,5 +29,9 @@ public class PicklistHelper {
             $x(String.format(PICKLIST_XPATH, "Suite")).click();
             $x(String.format(SUITE_PICKLIST_XPATH, suiteTitle)).click();
         }
+    }
+
+    public String getPickListText(String pickListName) {
+        return $x(String.format(PICKLIST_TEXT_XPATH, pickListName)).getText();
     }
 }

@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Selenide.$x;
 @Log4j2
 public class InputHelper {
 
-    private static final String TEXT_AREA_XPATH = "//*[contains(text(),'%s') and @for]//following::p";
+    private static final String TEXT_AREA_XPATH = "(//*[text()='%s']/following-sibling::*//p)[last()]";
 
     private static final String INPUT_XPATH = "//*[contains(text(),'%s') and @for]//following::input";
 
@@ -33,5 +33,10 @@ public class InputHelper {
     public void cleanTextArea(String label) {
         log.info("Cleaning a text area with label '{}'", label);
         $x(String.format(TEXT_AREA_XPATH, label)).clear();
+    }
+
+    public String getTextAreaText(String textAreaName) {
+        String text = $x(String.format(TEXT_AREA_XPATH, textAreaName)).getText();
+        return (text.isEmpty() ? null : text);
     }
 }

@@ -66,26 +66,10 @@ public class ProjectSteps extends BaseStep {
         return this;
     }
 
-    @Step("Check that project code error text is correct")
-    public ProjectSteps checkThatProjectCodeErrorTextIsCorrect(Project project) {
-        log.info("Checking that project code error text is correct");
-
-        Pattern elevenCharacters = Pattern.compile("^^.{11,}$");
-        Pattern oneCharacter = Pattern.compile("^.{1}$");
-        Pattern validCharacters = Pattern.compile("[a-zA-Z0-9]+");
-        Pattern sameCode = Pattern.compile("^sameCode$");
-
-        if (elevenCharacters.matcher(project.getProjectCode()).matches()) {
-            assertEquals(projectsListPage.getProjectCodeErrorText(), "The code may not be greater than 10 characters.", INCORRECT_PROJECT_CODE_ERROR_TEXT);
-        } else if (oneCharacter.matcher(project.getProjectCode()).matches()) {
-            assertEquals(projectsListPage.getProjectCodeErrorText(), "The code must be at least 2 characters.", INCORRECT_PROJECT_CODE_ERROR_TEXT);
-        } else if (!validCharacters.matcher(project.getProjectCode()).matches()) {
-            assertEquals(projectsListPage.getProjectCodeErrorText(), "The code format is invalid.", INCORRECT_PROJECT_CODE_ERROR_TEXT);
-        } else if (sameCode.matcher(project.getProjectCode()).matches()) {
-            assertEquals(projectsListPage.getProjectCodeErrorText(), "The selected project code is already in use.", INCORRECT_PROJECT_CODE_ERROR_TEXT);
-        } else {
-            throw new AssertionError("Unhandled project code");
-        }
+    @Step("Check that error message is correct")
+    public ProjectSteps errorMessageShouldBe(String errorMessage) {
+        log.info("Checking that error message is correct");
+        assertEquals(projectsListPage.getProjectCodeErrorText(), errorMessage, INCORRECT_PROJECT_CODE_ERROR_TEXT);
         return this;
     }
 
