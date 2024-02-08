@@ -50,7 +50,7 @@ public class BaseTest {
         } else {
             throw new IllegalArgumentException("Unknown browser: " + browser);
         }
-        Configuration.headless = false;
+        Configuration.headless = true;
         Configuration.timeout = 10000;
         Configuration.browserSize = "1920x1080";
         baseUrl = getProperty("qase.base.url");
