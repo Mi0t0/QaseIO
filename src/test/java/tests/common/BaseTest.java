@@ -2,19 +2,16 @@ package tests.common;
 
 import com.codeborne.selenide.Configuration;
 import com.github.javafaker.Faker;
-import org.testng.ITestContext;
+import lombok.extern.log4j.Log4j2;
 import org.testng.annotations.*;
-import steps.ApiSteps;
-import steps.LoginSteps;
-import steps.ProjectSteps;
-import steps.TestCaseSteps;
+import steps.*;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static utils.PropertyReader.getProperty;
 
+@Log4j2
 @Listeners(TestListener.class)
 public class BaseTest {
 
@@ -32,6 +29,8 @@ public class BaseTest {
 
     protected TestCaseSteps testCaseSteps;
 
+    protected TestPlanSteps testPlanSteps;
+
     @BeforeSuite(description = "Suite setup")
     public void environmentSetup() {
         new ApiSteps().cleanProjectsList();
@@ -39,7 +38,9 @@ public class BaseTest {
 
     @Parameters({"browser"})
     @BeforeMethod(description = "Browser setup")
-    public void setUp(@Optional("chrome") String browser, ITestContext testContext) {
+    public void setUp(@Optional("chrome") String browser) {
+
+        log.info("Opening browser {}", browser);
         if (browser.equalsIgnoreCase("chrome")) {
             Configuration.browser = "chrome";
         } else if (browser.equalsIgnoreCase("edge")) {
@@ -49,18 +50,18 @@ public class BaseTest {
         } else {
             throw new IllegalArgumentException("Unknown browser: " + browser);
         }
-        Configuration.headless = true;
+        Configuration.headless = false;
         Configuration.timeout = 10000;
         Configuration.browserSize = "1920x1080";
         baseUrl = getProperty("qase.base.url");
         open(baseUrl);
-        testContext.setAttribute("driver", getWebDriver());
 
         faker = new Faker();
         apiSteps = new ApiSteps();
         loginSteps = new LoginSteps();
         projectSteps = new ProjectSteps();
         testCaseSteps = new TestCaseSteps();
+        testPlanSteps = new TestPlanSteps();
 
         USERNAME = System.getProperty("user", getProperty("qase.user"));
         PASSWORD = System.getProperty("password", getProperty("qase.password"));
@@ -68,6 +69,7 @@ public class BaseTest {
 
     @AfterMethod(alwaysRun = true, description = "Browser teardown")
     public void tearDown() {
+        log.info("Closing browser");
         closeWebDriver();
     }
 }

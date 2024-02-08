@@ -5,9 +5,9 @@ import helpers.PicklistHelper;
 
 public abstract class BasePage {
 
-    InputHelper input;
+    protected InputHelper input;
 
-    PicklistHelper picklist;
+    protected PicklistHelper picklist;
 
     public abstract boolean isPageOpened();
 }

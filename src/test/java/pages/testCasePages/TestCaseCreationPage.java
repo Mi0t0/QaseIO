@@ -1,4 +1,4 @@
-package pages;
+package pages.testCasePages;
 
 import com.codeborne.selenide.Condition;
 import dtos.TestCase;
@@ -6,6 +6,7 @@ import helpers.InputHelper;
 import helpers.PicklistHelper;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
+import pages.BasePage;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;

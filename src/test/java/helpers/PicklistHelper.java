@@ -31,7 +31,7 @@ public class PicklistHelper {
         }
     }
 
-    public String getPickListText(String pickListName) {
-        return $x(String.format(PICKLIST_TEXT_XPATH, pickListName)).getText();
+    public String getPickListText(String label) {
+        return $x(String.format(PICKLIST_TEXT_XPATH, label)).getText();
     }
 }

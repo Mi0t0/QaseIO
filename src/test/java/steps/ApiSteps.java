@@ -1,6 +1,6 @@
 package steps;
 
-import adapters.ApiRequests;
+import helpers.apihelpers.ApiRequests;
 import com.github.javafaker.Faker;
 import dtos.Project;
 import dtos.TestSuite;

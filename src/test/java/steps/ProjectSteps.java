@@ -1,14 +1,13 @@
 package steps;
 
-import adapters.ApiRequests;
+import helpers.apihelpers.ApiRequests;
 import dtos.Project;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
-import pages.ProjectPage;
-import pages.ProjectsListPage;
+import pages.projectPages.ProjectPage;
+import pages.projectPages.ProjectsListPage;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 import static org.testng.Assert.*;
 

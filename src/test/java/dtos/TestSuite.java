@@ -1,6 +1,6 @@
 package dtos;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,8 +8,11 @@ import lombok.Data;
 @Builder
 public class TestSuite {
     String title;
+
     String description;
+
     String preconditions;
-    @SerializedName("parent_id")
+
+    @JsonProperty("parent_id")
     int parentId;
 }

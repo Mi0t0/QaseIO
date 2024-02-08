@@ -1,6 +1,7 @@
-package pages;
+package pages.loginPages;
 
 import com.codeborne.selenide.Condition;
+import pages.BasePage;
 
 import static com.codeborne.selenide.Selenide.*;
 
