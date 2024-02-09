@@ -1,29 +1,38 @@
 package dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Project {
 
-    @SerializedName("title")
+    @JsonProperty("title")
     String projectName;
 
-    @SerializedName("code")
+    @JsonProperty("code")
     String projectCode;
 
     String description;
 
-    @SerializedName("access_type")
+    @JsonProperty("access_type")
     String projectAccessType;
 
-    @SerializedName("access")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty("access")
     String memberAccess;
 
     String group;
 
+    @JsonIgnore
     Counts counts;
 
     static class Counts {

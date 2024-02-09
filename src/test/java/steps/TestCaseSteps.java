@@ -3,9 +3,9 @@ package steps;
 import dtos.TestCase;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
-import pages.ProjectRepositoryPage;
-import pages.TestCaseCreationPage;
-import pages.TestCaseEditPage;
+import pages.projectPages.ProjectRepositoryPage;
+import pages.testCasePages.TestCaseCreationPage;
+import pages.testCasePages.TestCaseEditPage;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;

@@ -18,10 +18,10 @@
         <testng.version>7.4.0</testng.version>
         <javafaker.version>1.0.2</javafaker.version>
         <aspectj.version>1.9.6</aspectj.version>
-        <allure-testng.version>2.13.9</allure-testng.version>
+        <allure-testng.version>2.25.0</allure-testng.version>
         <lombok.version>1.18.22</lombok.version>
         <log4j.version>2.14.1</log4j.version>
-        <dataformat.yaml.version>2.12.3</dataformat.yaml.version>
+        <dataformat.yaml.version>2.13.5</dataformat.yaml.version>
         <rest-assured.version>5.4.0</rest-assured.version>
         <google.gson.version>2.10.1</google.gson.version>
 

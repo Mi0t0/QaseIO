@@ -12,13 +12,11 @@ import static utils.AllureUtils.takeScreenshot;
 @Log4j2
 public class TestListener implements ITestListener {
 
-    WebDriver driver;
     @Override
     public void onTestFailure(ITestResult iTestResult) {
         log.info(String.format("======================================== FAILED TEST %s Duration: %ss ========================================", iTestResult.getName(),
                 getExecutionTime(iTestResult)));
-        driver = (WebDriver) iTestResult.getTestContext().getAttribute("driver");
-        takeScreenshot(driver);
+        takeScreenshot();
     }
     private long getExecutionTime(ITestResult iTestResult) {
         return TimeUnit.MILLISECONDS.toSeconds(iTestResult.getEndMillis() - iTestResult.getStartMillis());

@@ -14,7 +14,7 @@ public class TestCasesTest extends BaseTest {
     private static final String SUITE_NAME = "TestSuite";
 
     @BeforeMethod(description = "Login to Qase and create project")
-    public void positiveLogin() {
+    public void setUp() {
         apiSteps.
                 login(USERNAME, PASSWORD).
                 deleteProjectByCodeIfExists(PROJECT_CODE).

@@ -35,8 +35,8 @@ public class InputHelper {
         $x(String.format(TEXT_AREA_XPATH, label)).clear();
     }
 
-    public String getTextAreaText(String textAreaName) {
-        String text = $x(String.format(TEXT_AREA_XPATH, textAreaName)).getText();
+    public String getTextAreaText(String label) {
+        String text = $x(String.format(TEXT_AREA_XPATH, label)).getText();
         return (text.isEmpty() ? null : text);
     }
 }

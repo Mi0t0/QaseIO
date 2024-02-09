@@ -2,9 +2,9 @@ package steps;
 
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
-import pages.LoginPage;
-import pages.PasswordResetPage;
-import pages.ProjectsListPage;
+import pages.loginPages.LoginPage;
+import pages.loginPages.PasswordResetPage;
+import pages.projectPages.ProjectsListPage;
 
 import static org.testng.Assert.*;
 
@@ -63,7 +63,7 @@ public class LoginSteps extends BaseStep {
 
     @Step("Check that the user was redirected to reser password page")
     public LoginSteps checkThatUserWasRedirectedToResetPasswordPage() {
-        log.info("Checking that the user was redirected to reser password page");
+        log.info("Checking that the user was redirected to reset password page");
         assertTrue(resetPasswordPage.isPageOpened(), "Reset Page is not opened");
         return this;
     }
