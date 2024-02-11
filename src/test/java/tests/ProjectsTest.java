@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tests.common.BaseTest;
+import tests.common.Retry;
 
 import java.util.ArrayList;
 
@@ -53,7 +54,7 @@ public class ProjectsTest extends BaseTest {
                 deleteProjectByCodeIfExists(projectId);
     }
 
-    @Test(description = "Try to create new project with too long project code")
+    @Test(retryAnalyzer = Retry.class, description = "Try to create new project with too long project code")
     public void projectCodeShouldBeLessThen10Characters() {
         String projectCode = "1234567890123";
         Project project = Project.builder().
@@ -68,7 +69,7 @@ public class ProjectsTest extends BaseTest {
                 errorMessageShouldBe("The code may not be greater than 10 characters.");
     }
 
-    @Test(description = "Try to create new project with too short project code")
+    @Test(retryAnalyzer = Retry.class, description = "Try to create new project with too short project code")
     public void projectCodeShouldBeMoreThen1Character() {
         String projectCode = "1";
         Project project = Project.builder().
@@ -83,7 +84,7 @@ public class ProjectsTest extends BaseTest {
                 errorMessageShouldBe("The code must be at least 2 characters.");
     }
 
-    @Test(description = "Try to create new project with too long project code")
+    @Test(retryAnalyzer = Retry.class, description = "Try to create new project with too long project code")
     public void incorrectProjectCodeFormat() {
         String projectCode = "абвгд123";
         Project project = Project.builder().
@@ -98,7 +99,7 @@ public class ProjectsTest extends BaseTest {
                 errorMessageShouldBe("The code format is invalid.");
     }
 
-    @Test(description = "Try to create new project with existing project code in use")
+    @Test(retryAnalyzer = Retry.class, description = "Try to create new project with existing project code in use")
     public void sameProjectCodeExists() {
         String projectCode = "sameCode";
         Project project = Project.builder().
@@ -117,7 +118,7 @@ public class ProjectsTest extends BaseTest {
                 deleteProjectByCodeIfExists(projectCode.toUpperCase());
     }
 
-    @Test(description = "Rows per page defines number of projects displayed on page")
+    @Test(retryAnalyzer = Retry.class, description = "Rows per page defines number of projects displayed on page")
     public void rowsPerPageDefinesNumberOfProjectsDisplayedOnPage() {
         apiSteps.
                 createSeveralRandomProjects(15);
