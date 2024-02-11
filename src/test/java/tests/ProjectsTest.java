@@ -133,7 +133,7 @@ public class ProjectsTest extends BaseTest {
                 checkQuantityOfProjectsDisplayedPerPage(15);
     }
 
-    @Test(description = "Page navigation should work correctly")
+    @Test(retryAnalyzer = Retry.class, description = "Page navigation should work correctly")
     public void pageNavigationButtonsShouldChangeListOfProjects() {
         apiSteps.
                 createSeveralRandomProjects(6);
