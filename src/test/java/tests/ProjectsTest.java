@@ -163,7 +163,8 @@ public class ProjectsTest extends BaseTest {
                 createProject(project).
                 openPage().
                 deleteProject(project).
-                confirmProjectDeletion(true);
+                confirmProjectDeletion(true).
+                waitUntilModalIsDisappeared();
         apiSteps.
                 checkIfProjectExists(project, false);
         projectSteps.
@@ -182,7 +183,8 @@ public class ProjectsTest extends BaseTest {
                 createProject(project).
                 openPage().
                 deleteProject(project).
-                confirmProjectDeletion(false);
+                confirmProjectDeletion(false).
+                waitUntilModalIsDisappeared();
         apiSteps.
                 checkIfProjectExists(project, true);
         projectSteps.

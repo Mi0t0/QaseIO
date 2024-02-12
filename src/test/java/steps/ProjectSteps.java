@@ -160,4 +160,11 @@ public class ProjectSteps extends BaseStep {
         }
         return this;
     }
+
+    @Step("Wait until modal window is disappeared")
+    public ProjectSteps waitUntilModalIsDisappeared() {
+        log.info("Waiting until modal window is disappeared");
+        projectsListPage.waitUntilModalIsDisappeared();
+        return this;
+    }
 }

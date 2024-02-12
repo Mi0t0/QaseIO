@@ -156,4 +156,13 @@ public class ProjectsListPage extends BasePage {
         $x(CANCEL_PROJECT_DELETION_BUTTON_XPATH).click();
         return this;
     }
+
+    public ProjectsListPage waitUntilModalIsDisappeared() {
+        try {
+            $("[role=dialog]").shouldBe(Condition.disappear);
+        } catch (Exception ignored) {
+            throw new RuntimeException("Modal window is not disappeared");
+        }
+        return this;
+    }
 }
