@@ -1,9 +1,9 @@
 package steps;
 
-import helpers.apihelpers.ApiRequests;
 import com.github.javafaker.Faker;
 import dtos.Project;
 import dtos.TestSuite;
+import helpers.apihelpers.ApiRequests;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Cookie;
@@ -42,11 +42,10 @@ public class ApiSteps extends BaseStep {
     @Step("Create project with code '{projectCode}'")
     public ApiSteps createProjectWithCode(String projectCode) {
         log.info("Creating new project with code '{}'", projectCode);
-        String projectId = getRandomProjectId();
         Faker faker = new Faker();
 
         apiRequests.createProject(Project.builder().
-                projectName(projectId).
+                projectName(faker.name().name()).
                 projectCode(projectCode).
                 description(faker.weather().description()).
                 projectAccessType("Private").
@@ -78,10 +77,9 @@ public class ApiSteps extends BaseStep {
     public ApiSteps createSeveralRandomProjects(int quantityOfProjects) {
         Faker faker = new Faker();
         for (int i = 0; i < quantityOfProjects; i++) {
-            String projectCode = getRandomProjectId();
             apiRequests.createProject(Project.builder().
-                    projectName(faker.name().firstName()).
-                    projectCode(projectCode).
+                    projectName(faker.name().name()).
+                    projectCode(faker.numerify("##########")).
                     description(faker.weather().description()).
                     build());
         }

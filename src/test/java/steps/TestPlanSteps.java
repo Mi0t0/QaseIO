@@ -23,7 +23,7 @@ public class TestPlanSteps extends BaseStep{
         return this;
     }
 
-    @Step("Create test plan with all cases")
+    @Step("Create test plan '{title}' with all cases selected")
     public TestPlanSteps createTestPlanWithAllCases(String title, String description) {
         log.info("Creating test plan with all cases");
         testPlansListPage.
@@ -36,7 +36,7 @@ public class TestPlanSteps extends BaseStep{
         return this;
     }
 
-    @Step("Check that test plan is created")
+    @Step("Check that test plan '{title}' is created")
     public TestPlanSteps checkTestPlanIsCreated(String title) {
         log.info("Checking that test plan is created");
         testPlansListPage.isPageOpened();

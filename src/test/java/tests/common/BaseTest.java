@@ -72,4 +72,8 @@ public class BaseTest {
         log.info("Closing browser");
         closeWebDriver();
     }
+
+    public static String getRandomProjectId() {
+        return new Faker().numerify("##########");
+    }
 }

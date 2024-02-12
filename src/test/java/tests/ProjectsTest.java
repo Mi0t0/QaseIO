@@ -22,7 +22,7 @@ public class ProjectsTest extends BaseTest {
 
     @Test(description = "Create new project")
     public void projectShouldBeCreated() {
-        String projectId = projectSteps.getRandomProjectId();
+        String projectId = getRandomProjectId();
         Project project = Project.builder().
                 projectName(projectId).
                 projectCode(projectId).
@@ -39,7 +39,7 @@ public class ProjectsTest extends BaseTest {
 
     @Test(description = "Created project displayed in projects list")
     public void createdProjectShouldBeDisplayedInProjectsList() {
-        String projectId = projectSteps.getRandomProjectId();
+        String projectId = getRandomProjectId();
         Project project = Project.builder().
                 projectName(projectId).
                 projectCode(projectId).
@@ -55,7 +55,7 @@ public class ProjectsTest extends BaseTest {
     }
 
     @Test(retryAnalyzer = Retry.class, description = "Try to create new project with too long project code")
-    public void projectCodeShouldBeLessThen10Characters() {
+    public void projectCodeShouldBeLessThen11Characters() {
         String projectCode = "1234567890123";
         Project project = Project.builder().
                 projectName(projectCode).
@@ -153,7 +153,7 @@ public class ProjectsTest extends BaseTest {
 
     @Test(description = "Project should be removed if it was deleted")
     public void projectShouldBeRemovedIfItWasDeleted() {
-        String projectId = projectSteps.getRandomProjectId();
+        String projectId = getRandomProjectId();
         Project project = Project.builder().
                 projectName(projectId).
                 projectCode(projectId).
@@ -173,7 +173,7 @@ public class ProjectsTest extends BaseTest {
 
     @Test(description = "Project should not be deleted if deletion confirmation was canceled")
     public void projectShouldNotBeRemovedIfDeletionConfirmationWasCanceled() {
-        String projectId = projectSteps.getRandomProjectId();
+        String projectId = getRandomProjectId();
         Project project = Project.builder().
                 projectName(projectId).
                 projectCode(projectId).

@@ -9,7 +9,7 @@ import tests.common.BaseTest;
 
 public class TestCasesTest extends BaseTest {
 
-    private static final String PROJECT_CODE = "Test1337".toUpperCase();
+    private static final String PROJECT_CODE = getRandomProjectId();
 
     private static final String SUITE_NAME = "TestSuite";
 

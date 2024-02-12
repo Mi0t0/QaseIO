@@ -7,7 +7,7 @@ import tests.common.BaseTest;
 
 public class TestPlanTest extends BaseTest {
 
-    private static final String PROJECT_CODE = "Test2838".toUpperCase();
+    private static final String PROJECT_CODE = getRandomProjectId();
 
     @BeforeMethod
     public void setUp() {
@@ -24,8 +24,8 @@ public class TestPlanTest extends BaseTest {
                 createTestCase(testCase);
     }
 
-    @Test
-    public void testPlanCreationTest() {
+    @Test(description = "Test Plan positive creation")
+    public void testPlanShouldBeCreated() {
         String testPlanTitle = "Test Plan 1";
         String testPlanDescription = "Description";
         testPlanSteps.

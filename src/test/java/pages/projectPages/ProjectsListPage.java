@@ -25,6 +25,8 @@ public class ProjectsListPage extends BasePage {
 
     private static final String ALERT_CSS = "[role=alert]";
 
+    private static final String DIALOG_CSS = "[role=dialog]";
+
     private static final String PROJECTS_NAMES_XPATH = "//*[contains(@href, '/project/') and @class]";
 
     private static final String ROWS_PER_PAGE_SELECT_XPATH = "//*[contains(text(),'Rows per page')]/../*[@class]";
@@ -159,7 +161,7 @@ public class ProjectsListPage extends BasePage {
 
     public ProjectsListPage waitUntilModalIsDisappeared() {
         try {
-            $("[role=dialog]").shouldBe(Condition.disappear);
+            $(DIALOG_CSS).shouldBe(Condition.disappear);
         } catch (Exception ignored) {
             throw new RuntimeException("Modal window is not disappeared");
         }

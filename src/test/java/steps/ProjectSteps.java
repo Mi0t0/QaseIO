@@ -1,7 +1,7 @@
 package steps;
 
-import helpers.apihelpers.ApiRequests;
 import dtos.Project;
+import helpers.apihelpers.ApiRequests;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import pages.projectPages.ProjectPage;
