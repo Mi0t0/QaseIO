@@ -31,6 +31,15 @@ public class ProjectSteps extends BaseStep {
         return this;
     }
 
+    @Step("Open projects page with search parameter")
+    public ProjectSteps openPageWithSearch(String parameter) {
+        log.info("Opening projects page with search parameter '{}'", parameter);
+        projectsListPage.
+                openPageWithSearch(parameter).
+                isPageOpened();
+        return this;
+    }
+
     @Step("Create new project ")
     public ProjectSteps createProject(Project project) {
         log.info("Creating new project '{}' with code '{}'" , project.getProjectName(), project.getProjectCode());

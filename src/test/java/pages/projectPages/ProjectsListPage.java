@@ -17,6 +17,8 @@ public class ProjectsListPage extends BasePage {
 
     private static final String CREATE_NEW_PROJECT_BUTTON_ID = "createButton";
 
+    private static final String PROJECTS_LIST_LOAD_RESULT_XPATH = "//table | //*[contains(text(),'you don’t have any projects yet')]";
+
     private static final String PROJECT_CODE_ERROR_XPATH = "//*[@id='project-code']/../following-sibling::*";
 
     private static final String DESCRIPTION_TEXT_AREA_ID = "description-area";
@@ -52,10 +54,15 @@ public class ProjectsListPage extends BasePage {
         return this;
     }
 
+    public ProjectsListPage openPageWithSearch(String parameter) {
+        open("/projects?search=" + parameter);
+        return this;
+    }
+
     @Override
     public boolean isPageOpened() {
         try {
-            $(By.id(CREATE_NEW_PROJECT_BUTTON_ID)).shouldBe(Condition.visible);
+            $(By.id(PROJECTS_LIST_LOAD_RESULT_XPATH)).shouldBe(Condition.visible);
             return true;
         } catch (Throwable e) {
             return false;

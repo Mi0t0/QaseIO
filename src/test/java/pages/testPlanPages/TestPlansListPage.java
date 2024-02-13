@@ -15,6 +15,8 @@ public class TestPlansListPage extends BasePage {
 
     private static final String TEST_PLANS_XPATH = "//table//*[contains(@href,'/plan/')]";
 
+    private static final String TEST_PLANS_LIST_LOAD_RESULT_XPATH = "//table | //*[contains(text(),'you don’t have any test plans yet')]";
+
     public TestPlansListPage openPage(String projectCode) {
         open(String.format("/plan/%s", projectCode));
         return this;
@@ -23,7 +25,7 @@ public class TestPlansListPage extends BasePage {
     @Override
     public boolean isPageOpened() {
         try {
-            $x("//table | //*[contains(text(),'you don’t have any test plans yet')]").shouldBe(Condition.visible);
+            $x(TEST_PLANS_LIST_LOAD_RESULT_XPATH).shouldBe(Condition.visible);
             return true;
         } catch (Exception e) {
             return false;

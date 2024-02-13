@@ -161,7 +161,7 @@ public class ProjectsTest extends BaseTest {
 
         projectSteps.
                 createProject(project).
-                openPage().
+                openPageWithSearch(projectId).
                 deleteProject(project).
                 confirmProjectDeletion(true).
                 waitUntilModalIsDisappeared();
@@ -181,7 +181,7 @@ public class ProjectsTest extends BaseTest {
 
         projectSteps.
                 createProject(project).
-                openPage().
+                openPageWithSearch(projectId).
                 deleteProject(project).
                 confirmProjectDeletion(false).
                 waitUntilModalIsDisappeared();
