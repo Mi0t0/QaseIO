@@ -5,6 +5,7 @@ import com.github.javafaker.Faker;
 import lombok.extern.log4j.Log4j2;
 import org.testng.annotations.*;
 import steps.*;
+import utils.SensibleText;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
@@ -15,9 +16,9 @@ import static utils.PropertyReader.getProperty;
 @Listeners(TestListener.class)
 public class BaseTest {
 
-    public static String USERNAME;
+    public static SensibleText USERNAME;
 
-    public static String PASSWORD;
+    public static SensibleText PASSWORD;
 
     protected Faker faker;
 
@@ -63,8 +64,8 @@ public class BaseTest {
         testCaseSteps = new TestCaseSteps();
         testPlanSteps = new TestPlanSteps();
 
-        USERNAME = System.getProperty("user", getProperty("qase.user"));
-        PASSWORD = System.getProperty("password", getProperty("qase.password"));
+        USERNAME = new SensibleText(System.getProperty("user", getProperty("qase.user")), true);
+        PASSWORD = new SensibleText(System.getProperty("password", getProperty("qase.password")), true);
     }
 
     @AfterMethod(alwaysRun = true, description = "Browser teardown")

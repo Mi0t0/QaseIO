@@ -7,6 +7,7 @@ import helpers.apihelpers.ApiRequests;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Cookie;
+import utils.SensibleText;
 
 import java.util.Map;
 import java.util.Set;
@@ -21,9 +22,9 @@ public class ApiSteps extends BaseStep {
     private final ApiRequests apiRequests = new ApiRequests();
 
     @Step("Login through API with username '{username}' and password '{password}'")
-    public ApiSteps login(String username, String password) {
+    public ApiSteps login(SensibleText username, SensibleText password) {
         log.info("Logging in through API with username '{}' and password '{}'", username, password);
-        Map<String, String> cookies = apiRequests.getLoginCookies(username, password);
+        Map<String, String> cookies = apiRequests.getLoginCookies(username.getText(), password.getText());
         getWebDriver().manage().addCookie(new Cookie("XSRF-TOKEN", cookies.get("XSRF-TOKEN")));
         getWebDriver().manage().addCookie(new Cookie("__Host-session", cookies.get("__Host-session")));
         return this;

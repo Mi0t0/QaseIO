@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import pages.loginPages.LoginPage;
 import pages.loginPages.PasswordResetPage;
 import pages.projectPages.ProjectsListPage;
+import utils.SensibleText;
 
 import static org.testng.Assert.*;
 
@@ -18,12 +19,12 @@ public class LoginSteps extends BaseStep {
     private final ProjectsListPage projectsListPage = new ProjectsListPage();
 
     @Step("Login to Qase with credentials: {username} // {password}")
-    public LoginSteps login(String username, String password) {
+    public LoginSteps login(SensibleText username, SensibleText password) {
         log.info("Logging in to Qase with credentials: {} // {}", username, password);
 
         loginPage.openPage().
-                fillInUsername(username).
-                fillInPassword(password).
+                fillInUsername(username.getText()).
+                fillInPassword(password.getText()).
                 clickLoginButton();
         return this;
     }
@@ -69,10 +70,10 @@ public class LoginSteps extends BaseStep {
     }
 
     @Step("Check that email doesn't match email format alert is displayed")
-    public LoginSteps checkThatEmailDoesntMatchEmailFormatAlertIsDisplayed(String usermane) {
+    public LoginSteps checkThatEmailDoesntMatchEmailFormatAlertIsDisplayed(SensibleText username) {
         log.info("Checking that email doesn't match email format alert is displayed");
         assertEquals(loginPage.getAlertText(),
-                "Value '" + usermane + "' does not match format email of type string",
+                "Value '" + username.getText() + "' does not match format email of type string",
                 "The alert is not displayed or the text is incorrect");
         return this;
     }
