@@ -62,7 +62,7 @@ public class ProjectsListPage extends BasePage {
     @Override
     public boolean isPageOpened() {
         try {
-            $(By.id(PROJECTS_LIST_LOAD_RESULT_XPATH)).shouldBe(Condition.visible);
+            $x(PROJECTS_LIST_LOAD_RESULT_XPATH).shouldBe(Condition.visible);
             return true;
         } catch (Throwable e) {
             return false;
