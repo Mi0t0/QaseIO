@@ -1,3 +1,38 @@
+<h1>Qase.io</h1>
+<p>Test management system with wide range of features for manual and automated testing
+<br>and lots of integrations with other famous services.</p>
+
+<h3>Technology stack:</h3>
+Core:
+    <ul>
+        <b>
+            <li>Java</li>
+            <li>TestNG</li>
+            <li>Selenium</li>
+            <li>Selenide</li>
+            <li>Lombok</li>
+            <li>Rest Assured</li>
+            <li>Jackson</li>
+        </b>
+    </ul>
+
+Reports and logs:
+    <ul>
+        <b>
+            <li>Allure</li>
+            <li>Log4j2</li>
+        </b>
+    </ul>
+
+CI:
+    <ul>
+        <b>
+            <li>GitHub Actions</li>
+        </b>
+    </ul>
+
+---
+
 <h3>Checklist for "qase.io":</h3>
 <ol>
     <li>Login
