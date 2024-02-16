@@ -6,6 +6,7 @@ import dtos.TestSuite;
 import helpers.JsonHelper;
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
+import tests.common.BaseTest;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -20,9 +21,8 @@ public class ApiRequests {
 
     private static final String BASE_URL = getProperty("qase.api.url");
 
-    private static final String TOKEN = System.getProperty("token", getProperty("api.token"));
-
     private RequestSpecification getRequestSpecification() {
+        String TOKEN = BaseTest.getApiToken();
         return given().
                 header("Token", TOKEN).
                 header("Content-Type", "application/json");

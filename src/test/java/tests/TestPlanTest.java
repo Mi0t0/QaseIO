@@ -21,7 +21,8 @@ public class TestPlanTest extends BaseTest {
                 build();
         testCaseSteps.
                 openCreatePage(PROJECT_CODE).
-                createTestCase(testCase);
+                createTestCase(testCase).
+                closeNotificationsIfExist();
     }
 
     @Test(description = "Test Plan positive creation")

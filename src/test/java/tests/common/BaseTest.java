@@ -5,20 +5,25 @@ import com.github.javafaker.Faker;
 import lombok.extern.log4j.Log4j2;
 import org.testng.annotations.*;
 import steps.*;
-import utils.SensibleText;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
+import static providers.TempMailProvider.*;
+import static utils.PasswordGenerator.generatePassword;
 import static utils.PropertyReader.getProperty;
 
 @Log4j2
 @Listeners(TestListener.class)
 public class BaseTest {
 
-    public static SensibleText USERNAME;
+    private SignUpStep signUpStep;
 
-    public static SensibleText PASSWORD;
+    public static String USERNAME;
+
+    public static String PASSWORD;
+
+    private static String TOKEN;
 
     protected Faker faker;
 
@@ -34,7 +39,22 @@ public class BaseTest {
 
     @BeforeSuite(description = "Suite setup")
     public void environmentSetup() {
-        new ApiSteps().cleanProjectsList();
+        signUpStep = new SignUpStep();
+        createTempMail();
+        USERNAME = getTempMailEmail();
+        PASSWORD = setRandomPassword();
+        setConfiguration("chrome");
+        signUpStep.
+                createQaseAccount(USERNAME, PASSWORD).
+                waitForXSeconds(10);
+        activateOrg();
+        signUpStep.
+                waitForXSeconds(1).
+                openOnboardingPage().
+                waitForXSeconds(1).
+                completeOnboarding().
+                waitForXSeconds(3);
+        TOKEN = signUpStep.createApiToken();
     }
 
     @Parameters({"browser"})
@@ -42,6 +62,23 @@ public class BaseTest {
     public void setUp(@Optional("chrome") String browser) {
 
         log.info("Opening browser {}", browser);
+        setConfiguration(browser);
+
+        faker = new Faker();
+        apiSteps = new ApiSteps();
+        loginSteps = new LoginSteps();
+        projectSteps = new ProjectSteps();
+        testCaseSteps = new TestCaseSteps();
+        testPlanSteps = new TestPlanSteps();
+    }
+
+    @AfterMethod(alwaysRun = true, description = "Browser tear down")
+    public void tearDown() {
+        log.info("Closing browser");
+        closeWebDriver();
+    }
+
+    private static void setConfiguration(String browser) {
         if (browser.equalsIgnoreCase("chrome")) {
             Configuration.browser = "chrome";
         } else if (browser.equalsIgnoreCase("edge")) {
@@ -56,25 +93,18 @@ public class BaseTest {
         Configuration.browserSize = "1920x1080";
         baseUrl = getProperty("qase.base.url");
         open(baseUrl);
-
-        faker = new Faker();
-        apiSteps = new ApiSteps();
-        loginSteps = new LoginSteps();
-        projectSteps = new ProjectSteps();
-        testCaseSteps = new TestCaseSteps();
-        testPlanSteps = new TestPlanSteps();
-
-        USERNAME = new SensibleText(System.getProperty("user", getProperty("qase.user")), true);
-        PASSWORD = new SensibleText(System.getProperty("password", getProperty("qase.password")), true);
-    }
-
-    @AfterMethod(alwaysRun = true, description = "Browser teardown")
-    public void tearDown() {
-        log.info("Closing browser");
-        closeWebDriver();
     }
 
     public static String getRandomProjectId() {
         return new Faker().numerify("##########");
+    }
+
+    public static String setRandomPassword() {
+        PASSWORD = generatePassword();
+        return PASSWORD;
+    }
+
+    public static String getApiToken() {
+        return TOKEN;
     }
 }

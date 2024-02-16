@@ -2,7 +2,6 @@ package tests;
 
 import org.testng.annotations.Test;
 import tests.common.BaseTest;
-import utils.SensibleText;
 
 public class LoginTest extends BaseTest {
 
@@ -16,37 +15,37 @@ public class LoginTest extends BaseTest {
     @Test(description = "Email field should be mandatory")
     public void emailFieldShouldBeMandatory() {
         loginSteps.
-                login(new SensibleText("", false), new SensibleText("", false)).
+                login("", "").
                 checkEmptyFieldValidation();
     }
 
     @Test(description = "Password field should be mandatory")
     public void passwordFieldShouldBeMandatory() {
         loginSteps.
-                login(USERNAME, new SensibleText("", false)).
+                login(USERNAME, "").
                 checkEmptyFieldValidation();
     }
 
     @Test(description = "Credentials should be correct")
     public void credentialsShouldBeCorrect() {
         loginSteps.
-                login(USERNAME, new SensibleText("qwe123!@#$%^&*()123qwe", false)).
+                login(USERNAME, "qwe123!@#$%^&*()123qwe").
                 checkThatWrongCredentialsAlertIsDisplayed().
-                login(new SensibleText("sdfs4234#$@gmail.com", false), PASSWORD).
+                login("sdfs4234#$@gmail.com", PASSWORD).
                 checkThatWrongCredentialsAlertIsDisplayed();
     }
 
     @Test(description = "The user should be forced to change password if it's information is leaked")
     public void userShouldBeForcedToChangePasswordIfItsLeaked() {
         loginSteps.
-                login(USERNAME, new SensibleText("1234", false)).
+                login(USERNAME, "1234").
                 checkThatPasswordWasLeakedAlertIsDisplayed().
                 checkThatUserWasRedirectedToResetPasswordPage();
     }
 
     @Test(description = "Email must match email format")
     public void emailMustMatchEmailFormat() {
-        SensibleText wrongEmail = new SensibleText(USERNAME.getText().replace("@", ""), true);
+        String wrongEmail = USERNAME.replace("@", "");
         loginSteps.
                 login(wrongEmail, PASSWORD).
                 checkThatEmailDoesntMatchEmailFormatAlertIsDisplayed(wrongEmail);

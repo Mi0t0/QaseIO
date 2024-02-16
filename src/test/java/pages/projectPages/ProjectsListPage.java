@@ -27,7 +27,7 @@ public class ProjectsListPage extends BasePage {
 
     private static final String ALERT_CSS = "[role=alert]";
 
-    private static final String DIALOG_CSS = "[role=dialog]";
+    private static final String DIALOG_CSS = ".ReactModalPortal [role=dialog]";
 
     private static final String PROJECTS_NAMES_XPATH = "//*[contains(@href, '/project/') and @class]";
 

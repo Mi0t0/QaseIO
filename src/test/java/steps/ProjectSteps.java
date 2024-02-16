@@ -63,7 +63,8 @@ public class ProjectSteps extends BaseStep {
     @Step("Check that project name is correct")
     public ProjectSteps checkThatProjectNameIsCorrect(Project project) {
         log.info("Checking that project name is correct");
-        assertEquals(projectPage.getProjectName(), project.getProjectName(), "Project name is not correct");
+        assertEquals(projectPage.getProjectName(), project.getProjectName(),
+                String.format("Project name is not correct: %s instead of %s", projectPage.getProjectName(), project.getProjectName()));
         return this;
     }
 
