@@ -28,6 +28,7 @@ CI:
     <ul>
         <b>
             <li>GitHub Actions</li>
+            <li>Maven</li>
         </b>
     </ul>
 
