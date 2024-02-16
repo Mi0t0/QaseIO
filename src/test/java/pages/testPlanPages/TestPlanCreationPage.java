@@ -74,12 +74,4 @@ public class TestPlanCreationPage extends BasePage {
             throw new RuntimeException("Select cases modal was not appeared");
         }
     }
-
-    public TestPlanCreationPage addAllCases(){
-        clickAddCases().
-                waitUntilSelectCasesModalIsAppeared().
-                chooseAllCases().
-                clickDoneButton();
-        return this;
-    }
 }

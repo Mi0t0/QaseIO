@@ -31,7 +31,12 @@ public class TestPlanSteps extends BaseStep{
         testPlanCreationPage.
                 enterTitle(title).
                 enterDescription(description).
-                addAllCases().
+                clickAddCases().
+                waitUntilSelectCasesModalIsAppeared().
+                chooseAllCases();
+        closeNotificationsIfExist();
+        testPlanCreationPage.
+                clickDoneButton().
                 clickCreatePlan();
         return this;
     }
